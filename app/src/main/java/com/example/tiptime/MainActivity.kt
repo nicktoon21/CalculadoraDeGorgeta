@@ -12,20 +12,20 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        binding.calculateButton.setOnClickListener{ calculateTip()}
+        binding.calculateButton.setOnClickListener{
+            calculateTip()
+        }
     }
 
-    fun calculateTip (){
-        val stringInTextField = binding.coastOfService.text.toString()
-        val cost = stringInTextField.toDouble()
-        val selectedId = binding.tipOptions.checkedRadioButtonId
-        val tipPercentage = when (selectedId) {
+    private fun calculateTip (){
+        val stringInTextField = binding.costOfServiceEditText.text.toString()
+        val cost = stringInTextField.toDoubleOrNull()
+        val tipPercentage = when (binding.tipOptions.checkedRadioButtonId) {
             R.id.option_twenty_percent -> 0.20
             R.id.option_eighteen_percent -> 0.18
             else -> 0.15
         }
-        var tip = tipPercentage * cost
-        val roundUp = binding.roundUpSwitch.isChecked
+        var tip = tipPercentage * cost!!
         if(binding.roundUpSwitch.isChecked){
             tip = kotlin.math.ceil(tip)
         }
